@@ -16,4 +16,8 @@ func main() {
 		"groupAnagram: %v\n",
 		groupAnagrams([]string{"eat", "tea", "tan", "ate", "nat", "bat"}),
 	)
+	fmt.Printf(
+		"topKFrequent: %v\n",
+		topKFrequent([]int{1, 2, 1, 2, 1, 2, 3, 1, 3, 2}, 2),
+	)
 }
