@@ -12,4 +12,8 @@ func main() {
 	fmt.Printf(
 		"twoSum: %v\n", twoSum([]int{3, 2, 4}, 6),
 	)
+	fmt.Printf(
+		"groupAnagram: %v\n",
+		groupAnagrams([]string{"eat", "tea", "tan", "ate", "nat", "bat"}),
+	)
 }
