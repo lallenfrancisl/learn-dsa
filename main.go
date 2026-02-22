@@ -20,4 +20,8 @@ func main() {
 		"topKFrequent: %v\n",
 		topKFrequent([]int{1, 2, 1, 2, 1, 2, 3, 1, 3, 2}, 2),
 	)
+	fmt.Printf(
+		"productExceptSelf: %v\n",
+		productExceptSelf([]int{1, 2, 3, 4}),
+	)
 }
