@@ -12,7 +12,3 @@ func containsDuplicate(nums []int) bool {
 
 	return false
 }
-
-func main() {
-	println(containsDuplicate([]int{1, 2, 3, 1}))
-}
