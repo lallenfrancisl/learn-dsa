@@ -12,17 +12,24 @@ INPUTS: dict[str, list[TestCase]] = {
         (([1, 2, 3, 1],), True),
         (([1, 2, 3, 4],), False),
     ],
+    "242_valid_anagram.py": [
+        (("anagram", "nagaram"), True),
+        (("rat", "car"), False),
+        (("aacc", "ccac"), False),
+    ],
 }
 
 
 def _load_module(path: Path) -> Any:
     module_name = f"neetcode_150_{path.stem}"
     spec = importlib.util.spec_from_file_location(module_name, path)
+
     if spec is None or spec.loader is None:
         raise ImportError(f"Could not load {path}")
 
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
+
     return module
 
 
@@ -32,10 +39,12 @@ def _solution_method(solution: Any) -> tuple[str, Any]:
         for name, method in inspect.getmembers(solution, predicate=inspect.ismethod)
         if not name.startswith("_")
     ]
+
     if len(methods) != 1:
         raise ValueError(
             f"Expected exactly one public Solution method, found {len(methods)}"
         )
+
     return methods[0]
 
 
@@ -47,6 +56,7 @@ def run() -> None:
 
         module = _load_module(path)
         test_cases = INPUTS.get(path.name)
+
         if test_cases is None:
             print(f"{path.name}: skipped, no inputs configured")
             continue
@@ -56,6 +66,7 @@ def run() -> None:
             method_name, method = _solution_method(solution)
             result = method(*args)
             status = "PASS" if result == expected else "FAIL"
+
             print(
                 f"{path.name}: {method_name}{args!r} -> {result!r}; "
                 f"expected {expected!r} [{status}]"
