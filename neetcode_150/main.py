@@ -40,6 +40,11 @@ INPUTS: dict[str, list[TestCase]] = {
         (([1, 2, 3, 4],), [24, 12, 8, 6]),
         # (([-1, 1, 0, -3, 3],), [0, 0, 9, 0, 0]),
     ],
+    "128_longest_consecutive_sequence.py": [
+        (([100, 4, 200, 1, 3, 2],), 4),
+        (([0, 3, 7, 2, 5, 8, 4, 6, 0, 1],), 9),
+        (([1, 0, 1, 2],), 3),
+    ],
 }
 
 
@@ -103,7 +108,11 @@ def run() -> None:
             solution = module.Solution()
             method_name, method = _solution_method(solution)
             result = method(*args)
-            status = f"{GREEN}PASS{RESET}" if _matches_expected(result, expected) else f"{RED}FAIL{RESET}"
+            status = (
+                f"{GREEN}PASS{RESET}"
+                if _matches_expected(result, expected)
+                else f"{RED}FAIL{RESET}"
+            )
 
             print(
                 f"{path.name}: {method_name}{args!r} -> {result!r}; "
