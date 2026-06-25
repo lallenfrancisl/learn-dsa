@@ -22,6 +22,12 @@ INPUTS: dict[str, list[TestCase]] = {
         (([3, 2, 4], 6), [1, 2]),
         (([3, 3], 6), [0, 1]),
     ],
+    "49_group_anagrams.py": [
+        (
+            (["eat", "tea", "tan", "ate", "nat", "bat"],),
+            [["bat"], ["nat", "tan"], ["ate", "eat", "tea"]],
+        ),
+    ],
 }
 
 
@@ -53,6 +59,19 @@ def _solution_method(solution: Any) -> tuple[str, Any]:
     return methods[0]
 
 
+def _matches_expected(result: Any, expected: Any) -> bool:
+    if isinstance(expected, list) and all(isinstance(item, list) for item in expected):
+        if not isinstance(result, list) or not all(isinstance(item, list) for item in result):
+            return False
+
+        normalized_result = sorted(sorted(group) for group in result)
+        normalized_expected = sorted(sorted(group) for group in expected)
+
+        return normalized_result == normalized_expected
+
+    return result == expected
+
+
 def run() -> None:
     folder = Path(__file__).parent
     for path in sorted(folder.glob("*.py")):
@@ -70,7 +89,7 @@ def run() -> None:
             solution = module.Solution()
             method_name, method = _solution_method(solution)
             result = method(*args)
-            status = "PASS" if result == expected else "FAIL"
+            status = "PASS" if _matches_expected(result, expected) else "FAIL"
 
             print(
                 f"{path.name}: {method_name}{args!r} -> {result!r}; "
