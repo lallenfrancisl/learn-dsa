@@ -5,6 +5,9 @@ from typing import Any
 
 
 TestCase = tuple[tuple[Any, ...], Any]
+GREEN = "\033[32m"
+RED = "\033[31m"
+RESET = "\033[0m"
 
 
 INPUTS: dict[str, list[TestCase]] = {
@@ -32,6 +35,10 @@ INPUTS: dict[str, list[TestCase]] = {
         (([1, 1, 1, 2, 2, 3], 2), [1, 2]),
         (([1], 1), [1]),
         (([1, 2, 1, 2, 1, 2, 3, 1, 3, 2], 2), [1, 2]),
+    ],
+    "238_product_of_array_except_self.py": [
+        (([1, 2, 3, 4],), [24, 12, 8, 6]),
+        # (([-1, 1, 0, -3, 3],), [0, 0, 9, 0, 0]),
     ],
 }
 
@@ -96,7 +103,7 @@ def run() -> None:
             solution = module.Solution()
             method_name, method = _solution_method(solution)
             result = method(*args)
-            status = "PASS" if _matches_expected(result, expected) else "FAIL"
+            status = f"{GREEN}PASS{RESET}" if _matches_expected(result, expected) else f"{RED}FAIL{RESET}"
 
             print(
                 f"{path.name}: {method_name}{args!r} -> {result!r}; "
