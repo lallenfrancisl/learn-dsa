@@ -28,6 +28,11 @@ INPUTS: dict[str, list[TestCase]] = {
             [["bat"], ["nat", "tan"], ["ate", "eat", "tea"]],
         ),
     ],
+    "347_top_k_frequent_elements.py": [
+        (([1, 1, 1, 2, 2, 3], 2), [1, 2]),
+        (([1], 1), [1]),
+        (([1, 2, 1, 2, 1, 2, 3, 1, 3, 2], 2), [1, 2]),
+    ],
 }
 
 
@@ -61,7 +66,9 @@ def _solution_method(solution: Any) -> tuple[str, Any]:
 
 def _matches_expected(result: Any, expected: Any) -> bool:
     if isinstance(expected, list) and all(isinstance(item, list) for item in expected):
-        if not isinstance(result, list) or not all(isinstance(item, list) for item in result):
+        if not isinstance(result, list) or not all(
+            isinstance(item, list) for item in result
+        ):
             return False
 
         normalized_result = sorted(sorted(group) for group in result)
