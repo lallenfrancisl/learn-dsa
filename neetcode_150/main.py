@@ -45,6 +45,11 @@ INPUTS: dict[str, list[TestCase]] = {
         (([0, 3, 7, 2, 5, 8, 4, 6, 0, 1],), 9),
         (([1, 0, 1, 2],), 3),
     ],
+    "125_valid_palindrome.py": [
+        (("A man, a plan, a canal: Panama",), True),
+        (("race a car",), False),
+        ((" ",), True),
+    ],
 }
 
 
