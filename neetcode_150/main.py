@@ -60,6 +60,9 @@ INPUTS: dict[str, list[TestCase]] = {
         (([1, 8, 6, 2, 5, 4, 8, 3, 7],), 49),
         (([1, 1],), 1),
     ],
+    "encode_and_decode_strings.py": [
+        ((["Hello", "World"],), ["Hello", "World"]),
+    ],
 }
 
 
@@ -78,15 +81,13 @@ def _load_module(path: Path) -> Any:
 
 def _solution_method(solution: Any) -> tuple[str, Any]:
     methods = [
-        (name, method)
-        for name, method in inspect.getmembers(solution, predicate=inspect.ismethod)
-        if not name.startswith("_")
+        (name, getattr(solution, name))
+        for name, value in type(solution).__dict__.items()
+        if not name.startswith("_") and inspect.isfunction(value)
     ]
 
-    if len(methods) != 1:
-        raise ValueError(
-            f"Expected exactly one public Solution method, found {len(methods)}"
-        )
+    if len(methods) == 0:
+        raise ValueError("Expected at least one public Solution method")
 
     return methods[0]
 
