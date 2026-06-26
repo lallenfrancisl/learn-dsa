@@ -63,6 +63,13 @@ INPUTS: dict[str, list[TestCase]] = {
     "encode_and_decode_strings.py": [
         ((["Hello", "World"],), ["Hello", "World"]),
     ],
+    "20_valid_parentheses.py": [
+        (("()",), True),
+        (("()[]{}",), True),
+        (("(]",), False),
+        (("([])",), True),
+        (("([)]",), False),
+    ],
 }
 
 
