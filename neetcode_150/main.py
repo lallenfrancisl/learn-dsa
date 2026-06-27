@@ -82,6 +82,10 @@ INPUTS: dict[str, list[TestCase]] = {
         (([1], 1), 0),
         (([3, 5, 1], 3), 0),
     ],
+    "121_best_time_to_buy_and_sell_stock.py": [
+        (([7, 1, 5, 3, 6, 4],), 5),
+        (([7, 6, 4, 3, 1],), 0),
+    ],
 }
 
 
