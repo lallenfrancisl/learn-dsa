@@ -86,6 +86,12 @@ INPUTS: dict[str, list[TestCase]] = {
         (([7, 1, 5, 3, 6, 4],), 5),
         (([7, 6, 4, 3, 1],), 0),
     ],
+    "3_longest_substring_without_repeating_characters.py": [
+        (("abcabcbb",), 3),
+        (("bbbbb",), 1),
+        (("pwwkew",), 3),
+        (("dvdf",), 3),
+    ],
 }
 
 
