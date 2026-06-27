@@ -92,6 +92,10 @@ INPUTS: dict[str, list[TestCase]] = {
         (("pwwkew",), 3),
         (("dvdf",), 3),
     ],
+    "424_longest_repeating_character_replacement.py": [
+        (("ABAB", 2), 4),
+        (("AABABBA", 1), 4),
+    ],
 }
 
 
