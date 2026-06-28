@@ -96,6 +96,11 @@ INPUTS: dict[str, list[TestCase]] = {
         (("ABAB", 2), 4),
         (("AABABBA", 1), 4),
     ],
+    "76_minimum_window_substring.py": [
+        (("ADOBECODEBANC", "ABC"), "BANC"),
+        (("a", "a"), "a"),
+        (("a", "aa"), ""),
+    ],
 }
 
 
