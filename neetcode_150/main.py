@@ -1,7 +1,10 @@
 import inspect
 import importlib.util
+from copy import deepcopy
 from pathlib import Path
 from typing import Any
+
+from list_node import ListNode, to_list_node
 
 
 TestCase = tuple[tuple[Any, ...], Any]
@@ -101,6 +104,12 @@ INPUTS: dict[str, list[TestCase]] = {
         (("a", "a"), "a"),
         (("a", "aa"), ""),
     ],
+    "206_reverse_linked_list.py": [
+        (
+            (to_list_node([1, 2, 3, 4, 5]),),
+            to_list_node([5, 4, 3, 2, 1]),
+        )
+    ],
 }
 
 
@@ -117,7 +126,7 @@ def _load_module(path: Path) -> Any:
     return module
 
 
-def _solution_method(solution: Any) -> tuple[str, Any]:
+def _solution_methods(solution: Any) -> list[tuple[str, Any]]:
     methods = [
         (name, getattr(solution, name))
         for name, value in type(solution).__dict__.items()
@@ -127,10 +136,39 @@ def _solution_method(solution: Any) -> tuple[str, Any]:
     if len(methods) == 0:
         raise ValueError("Expected at least one public Solution method")
 
-    return methods[0]
+    variant_methods = [
+        method
+        for method in methods
+        if method[0].lower().endswith(("recursive", "looped"))
+    ]
+
+    return variant_methods or [methods[0]]
+
+
+def _solution_classes(module: Any) -> list[tuple[str, Any]]:
+    classes = [
+        (name, value)
+        for name, value in module.__dict__.items()
+        if inspect.isclass(value)
+        and name.startswith("Solution")
+        and name.lower().endswith(("recursive", "looped"))
+    ]
+
+    if len(classes) > 0:
+        return classes
+
+    if hasattr(module, "Solution"):
+        return [("Solution", module.Solution)]
+
+    raise AttributeError(f"{module.__name__} has no Solution class")
 
 
 def _matches_expected(result: Any, expected: Any) -> bool:
+    if isinstance(expected, ListNode):
+        return isinstance(result, ListNode) and _matches_expected(
+            result.to_list(), expected.to_list()
+        )
+
     if isinstance(expected, list) and all(isinstance(item, list) for item in expected):
         if not isinstance(result, list) or not all(
             isinstance(item, list) for item in result
@@ -159,19 +197,22 @@ def run() -> None:
             continue
 
         for args, expected in test_cases:
-            solution = module.Solution()
-            method_name, method = _solution_method(solution)
-            result = method(*args)
-            status = (
-                f"{GREEN}PASS{RESET}"
-                if _matches_expected(result, expected)
-                else f"{RED}FAIL{RESET}"
-            )
+            for solution_name, solution_class in _solution_classes(module):
+                for method_name, _ in _solution_methods(solution_class()):
+                    solution = solution_class()
+                    method = getattr(solution, method_name)
+                    method_args = deepcopy(args)
+                    result = method(*method_args)
+                    status = (
+                        f"{GREEN}PASS{RESET}"
+                        if _matches_expected(result, expected)
+                        else f"{RED}FAIL{RESET}"
+                    )
 
-            print(
-                f"{path.name}: {method_name}{args!r} -> {result!r}; "
-                f"expected {expected!r} [{status}]"
-            )
+                    print(
+                        f"{path.name}: {solution_name}.{method_name}{args!r} "
+                        f"-> {result!r}; expected {expected!r} [{status}]"
+                    )
 
 
 if __name__ == "__main__":
