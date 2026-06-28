@@ -110,6 +110,20 @@ INPUTS: dict[str, list[TestCase]] = {
             to_list_node([5, 4, 3, 2, 1]),
         )
     ],
+    "21_merge_two_sorted_lists.py": [
+        (
+            (to_list_node([1, 2, 4]), to_list_node([1, 3, 4])),
+            to_list_node([1, 1, 2, 3, 4, 4]),
+        ),
+        (
+            (to_list_node([]), to_list_node([])),
+            to_list_node([]),
+        ),
+        (
+            (to_list_node([]), to_list_node([0])),
+            to_list_node([0]),
+        ),
+    ],
 }
 
 
