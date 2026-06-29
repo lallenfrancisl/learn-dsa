@@ -124,6 +124,16 @@ INPUTS: dict[str, list[TestCase]] = {
             to_list_node([0]),
         ),
     ],
+    "143_reorder_list.py": [
+        (
+            (to_list_node([1, 2, 3, 4]),),
+            to_list_node([1, 4, 2, 3]),
+        ),
+        (
+            (to_list_node([1, 2, 3, 4, 5]),),
+            to_list_node([1, 5, 2, 4, 3]),
+        ),
+    ],
 }
 
 
