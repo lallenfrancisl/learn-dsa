@@ -134,6 +134,23 @@ INPUTS: dict[str, list[TestCase]] = {
             to_list_node([1, 5, 2, 4, 3]),
         ),
     ],
+    "19_remove_nth_node_from_end_of_list.py": [
+        (
+            (to_list_node([1, 2, 3, 4, 5]), 2),
+            to_list_node([1, 2, 3, 5]),
+        ),
+        (
+            (
+                to_list_node(
+                    [
+                        1,
+                    ]
+                ),
+                1,
+            ),
+            to_list_node([]),
+        ),
+    ],
 }
 
 
