@@ -151,6 +151,26 @@ INPUTS: dict[str, list[TestCase]] = {
             to_list_node([]),
         ),
     ],
+    "23_merge_k_sorted_lists.py": [
+        (
+            (
+                [
+                    to_list_node([1, 4, 5]),
+                    to_list_node([1, 3, 4]),
+                    to_list_node([2, 6]),
+                ],
+            ),
+            to_list_node([1, 1, 2, 3, 4, 4, 5, 6]),
+        ),
+        (
+            ([],),
+            to_list_node([]),
+        ),
+        (
+            ([to_list_node([])],),
+            to_list_node([]),
+        ),
+    ],
 }
 
 
