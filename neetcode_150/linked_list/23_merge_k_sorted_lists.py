@@ -1,10 +1,8 @@
-from typing import Optional
-
 from list_node import ListNode
 
 
 class Solution:
-    def mergeKLists(self, lists: list[Optional[ListNode]]) -> Optional[ListNode]:
+    def mergeKLists(self, lists: list[ListNode | None]) -> ListNode | None:
         if not lists or len(lists) == 0:
             return None
 
